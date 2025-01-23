@@ -1,161 +1,122 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mental Health Chatbot</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background-color: #09b1f3d3;
-    }
-    #chat-container {
-      width: 400px;
-      border: 1px solid #f80505;
-      border-radius: 8px;
-      padding: 10px;
-      background: rgb(7, 226, 73);
-      box-shadow: 0 2px 10px rgba(226, 241, 4, 0.1);
-    }
-    #chat-window {
-      height: 400px;
-      overflow-y: auto;
-      border-bottom: 1px solid #9203f1;
-      margin-bottom: 10px;
-      padding: 5px;
-    } 
-    #user-input {
-      width: calc(100% - 100px);
-      padding: 8px;
-    }
-    #send-btn {
-      padding: 8px;
-      background: #080808;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-  </style>
-</head>
-<body>
-  <div id="chat-container">
-    <div id="chat-window"></div>
-    <input id="user-input" type="text" placeholder="Type a message...">
-    <button id="send-btn">send</button>
-  </div>
-  <script src="chatbot.js"></script>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mental Health Chatbot</title>
+  <title>Tree Hole Chatbot</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      background-color: rgb(7, 226, 73);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      background-color: #09b1f3d3;
     }
 
     #chat-container {
-      width: 100vh;
-      height: 100vh;
-      border: 1px solid #f80505;
+      width: 50%;
+      height: 80%;
       border-radius: 8px;
       padding: 10px;
-      background: rgb(7, 226, 73);
-      box-shadow: 0 2px 10px rgba(226, 241, 4, 0.1);
+      background: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-aspect-ratio: 1/1) {
+      /* Narrow screens (e.g., mobile) */
+      #chat-container {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
     }
 
     #chat-window {
-      height: 80vh;
+      flex: 1;
       overflow-y: auto;
-      border-bottom: 1px solid #9203f1;
+      padding: 10px;
       margin-bottom: 10px;
-      padding: 5px;
     }
 
-    /* 消息通用样式 */
     .message {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       margin: 10px 0;
     }
 
     .message img {
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      margin-right: 10px;
+      margin: 0 10px;
     }
 
     .message-content {
       max-width: 70%;
-      padding: 8px;
+      padding: 10px;
       border-radius: 10px;
     }
 
-    /* Rob 的消息样式 */
     .left {
-      flex-direction: row;
       justify-content: flex-start;
     }
 
     .left .message-content {
-      background: #fff;
+      background: #f0f0f0;
       color: #000;
     }
 
-    /* Me 的消息样式 */
     .right {
-      flex-direction: row-reverse;
       justify-content: flex-end;
     }
 
     .right .message-content {
       background: #4caf50;
-      color: #fff;
+      color: white;
+    }
+
+    #input-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      overflow: hidden;
+      padding: 5px;
     }
 
     #user-input {
-      width: calc(100% - 100px);
-      padding: 12px;
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 10px;
+      border-radius: 30px;
     }
 
     #send-btn {
-      width: 45px;
-      height: 45px;
-      padding: 0;
+      width: 40px;
+      height: 40px;
       border: none;
       border-radius: 50%;
-      background: #080808;
+      background: #4caf50;
       color: white;
       cursor: pointer;
-      font-size: xx-large;
+      font-size: large;
+      margin-left: 5px;
     }
   </style>
 </head>
 <body>
   <div id="chat-container">
     <div id="chat-window"></div>
-    <input id="user-input" type="text" placeholder="Type a message...">
-    <button id="send-btn">𖤂</button>
+    <div id="input-container">
+      <input id="user-input" type="text" placeholder="Type a message...">
+      <button id="send-btn">➤</button>
+    </div>
   </div>
   <script src="chatbot.js"></script>
 </body>

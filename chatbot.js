@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const chatWindow = document.getElementById("chat-window");
-  const userInput = document.getElementById("user-input");
-  const sendBtn = document.getElementById("send-btn");
+  var chatWindow = document.getElementById("chat-window");
+  var userInput = document.getElementById("user-input");
+  var sendBtn = document.getElementById("send-btn");
 
+  // 聊天机器人预设的回复 / Chatbot's predefined responses
     //Key words responses  简单的回应逻辑
     const responses = {
       anxiety: "It sounds like you're feeling anxious. Would you like some breathing exercises?",
@@ -121,90 +122,81 @@ document.addEventListener("DOMContentLoaded", function () {
      worried: "It sounds like you're feeling worried. What's on your mind?",
      confused: "It sounds like you're feeling confused. Is there anything I can help clarify?"
     };
-  
-  //   // 发送消息函数
-  //   function sendMessage() {
-  //     const userMessage = userInput.value.trim();
-  //     if (!userMessage) return;
-  
-  //     // 显示用户消息
-  //     appendMessage("Me", userMessage);
-  
-  //     // 生成机器人回应
-  //     const keywords = Object.keys(responses);
-  //     const matchedKeyword = keywords.find(keyword =>
-  //       userMessage.toLowerCase().includes(keyword)
-  //     );
-  //     const botResponse = responses[matchedKeyword] || responses.default;
-  
-  //     setTimeout(() => appendMessage("Frank", botResponse), 500);
-  //     userInput.value = "";
-  //   }
-  
-  //   // 显示消息在窗口
-  //   function appendMessage(sender, message) {
-  //     const messageElement = document.createElement("div");
-  //     messageElement.textContent = `${sender}: ${message}`;
-  //     chatWindow.appendChild(messageElement);
-  //     chatWindow.scrollTop = chatWindow.scrollHeight;
-  //   }
-  
-  //   sendBtn.addEventListener("click", sendMessage);
-  //   userInput.addEventListener("keypress", function (e) {
-  //     if (e.key === "Enter") sendMessage();
-  //   });
-  // });
-  let lastSender = null; // 记录上一条消息的发送者
 
-  // Send message function
+    // 发送消息函数
   function sendMessage() {
-    const userMessage = userInput.value.trim();
-    if (!userMessage) return;
+    // 获取用户输入的消息
+    var userMessage = userInput.value.trim();
 
-    // Display user's message
-    appendMessage("Me", userMessage, "right", "me-avatar.png");
+    // 如果消息为空，直接返回
+    if (userMessage === "") {
+      return;
+    }
 
-    // Generate bot's response
-    const keywords = Object.keys(responses);
-    const matchedKeyword = keywords.find((keyword) =>
-      userMessage.toLowerCase().includes(keyword)
-    );
-    const botResponse = responses[matchedKeyword] || responses.default;
+    // 显示用户的消息到聊天窗口Display user's message in the chat window
+    appendMessage("user", userMessage, "right", "user-avatar.png");
 
-    setTimeout(() => appendMessage("Rob", botResponse, "left", "rob-avatar.png"), 500);
+    // 根据关键词匹配生成机器人回复 / Generate bot response based on keyword matching
+    var keywords = Object.keys(responses);
+    var matchedKeyword = null;
+
+    for (var i = 0; i < keywords.length; i++) {
+      if (userMessage.toLowerCase().includes(keywords[i])) {
+        matchedKeyword = keywords[i];
+        break;
+      }
+    }
+
+    var botResponse = matchedKeyword ? responses[matchedKeyword] : responses["default"];
+
+    // 模拟延迟后显示机器人回复 / Simulate a delay before showing the bot's response
+    setTimeout(function () {
+      appendMessage("bot", botResponse, "left", "rob-avatar.png");
+    }, 500);
+
+    // 清空输入框 / Clear the input box
     userInput.value = "";
   }
 
-  // Append message function
+  // 显示消息到聊天窗口 / Function to display a message in the chat window
   function appendMessage(sender, message, position, avatar) {
-    const messageElement = document.createElement("div");
-    messageElement.classList.add("message", position);
+    // 创建消息容器 / Create a message container
+    var messageElement = document.createElement("div");
+    messageElement.classList.add("message");
+    messageElement.classList.add(position);
 
-    // Add avatar if sender is different from the last message
-    if (lastSender !== sender) {
-      const avatarElement = document.createElement("img");
-      avatarElement.src = avatar;
-      avatarElement.alt = `${sender}'s avatar`;
-      messageElement.appendChild(avatarElement);
-    }
+    // 添加头像avatar
+    var avatarElement = document.createElement("img");
+    avatarElement.src = avatar; // 头像path
+    avatarElement.alt = sender === "user" ? "User Avatar" : "Bot Avatar";
+    avatarElement.classList.add("avatar");
 
-    // Add message content
-    const contentElement = document.createElement("div");
+    // 添加消息文本 / Add message text
+    var contentElement = document.createElement("div");
     contentElement.classList.add("message-content");
     contentElement.textContent = message;
 
-    messageElement.appendChild(contentElement);
+    // 根据发送者调整布局 / Adjust layout based on the sender
+    if (position === "right") {
+      messageElement.appendChild(contentElement);
+      messageElement.appendChild(avatarElement);
+    } else {
+      messageElement.appendChild(avatarElement);
+      messageElement.appendChild(contentElement);
+    }
+
+    // 将消息添加到聊天窗口 / Append the message to the chat window
     chatWindow.appendChild(messageElement);
 
-    // Update scroll position
+    // 滚动到底部 / Scroll to the bottom
     chatWindow.scrollTop = chatWindow.scrollHeight;
-
-    // Update last sender
-    lastSender = sender;
   }
 
+  // 添加事件监听器 / Add event listeners
   sendBtn.addEventListener("click", sendMessage);
-  userInput.addEventListener("keypress", function (e) {
-    if (e.key === "Enter") sendMessage();
+  userInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      sendMessage();
+    }
   });
 });
